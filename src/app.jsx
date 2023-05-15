@@ -1,28 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React from "react";
-
+import React, { useState } from "react";
 import About from "./About/index";
-import Contact from "./Contact/index";
 import Works from "./Works/index";
 import Home from "./Home/index";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavbar from "./mynavbar";
-import ConcretCases from"./Works/ConcretCases/index";
-import Exercices from"./Works/Exercices/index";
-import CaseStudies from"./Works/CaseStudies/index";
+import CaseStudies from "./Works/studycase";
+import './styles.css';
+import useSystemTheme from "./useSystemTheme";
+
 export default function App() {
+  const [darkMode, setDarkMode] = useState(useSystemTheme());
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+
   return (
     <BrowserRouter>
-      <MyNavbar />
+      <MyNavbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/works" element={<Works />} />
-          <Route path="/works/exercices" element={<Exercices />} />
-          <Route path="/works/casestudies" element={<CaseStudies />} />
-          <Route path="/works/concretcases" element={<ConcretCases />} />
+          <Route path="/works/:slug" element={<CaseStudies />} />
         </Routes>
       </main>
     </BrowserRouter>

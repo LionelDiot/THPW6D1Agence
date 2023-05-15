@@ -1,8 +1,14 @@
-import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
-import React from "react";
+import { Nav, Navbar, Container } from "react-bootstrap";
+import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
+import UseDarkMode from './useDarkMode';
+export default function MyNavbar({ darkMode, toggleDarkMode }) {
+  const [isDarkMode, setIsDarkMode] = UseDarkMode();
 
-export default function MyNavbar() {
+  useEffect(() => {
+    setIsDarkMode(darkMode);
+  }, [darkMode, setIsDarkMode]);
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -11,30 +17,15 @@ export default function MyNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <LinkContainer to="/about">
-              <Nav.Link>About</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/contact">
-              <Nav.Link>Contact</Nav.Link>
+              <Nav.Link>L'agence</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/works">
-              <Nav.Link>WorkHome</Nav.Link>
+              <Nav.Link>Nos projets</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Works:" id="basic-nav-dropdown">
-              <LinkContainer to="/works/concretcases">
-                <NavDropdown.Item>ConcretCases</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Divider />
-              <LinkContainer to="/works/exercices">
-                <NavDropdown.Item>Exercices</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Divider />
-              <LinkContainer to="/works/casestudies">
-                <NavDropdown.Item>CaseStudies </NavDropdown.Item>
-              </LinkContainer>
-            </NavDropdown>
+            <Nav.Link onClick={toggleDarkMode}>{darkMode ? 'Light Mode' : 'Dark Mode'}</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
